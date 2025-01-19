@@ -1,0 +1,189 @@
+body {
+    display: inline;
+    background-attachment: fixed;
+    background-image: url(../../fotos/medicos.jpeg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+
+header {
+    background-color: transparent; 
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav>button {
+    background-color: #ffffff;
+    color: #00509e; 
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav>button:hover {
+    background-color: #003f7f; 
+    color: #ffffff; 
+    border-color: #003f7f;
+}
+
+nav>button:active {
+    transform: scale(0.95); 
+}
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+#container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+}
+
+#sair{
+    color: #ffffff;
+    background-color: #cc0000;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#sair:hover {
+    background-color: #ffffff; 
+    color: #cc0000; 
+    border-color: #ffffff;
+}
+
+h1 {
+    color: #00509e;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    color: #00509e;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+p,label {
+    color: #333333;
+    font-size: 16px;
+    margin: 10px 0;
+}
+label{
+    text-align: center;
+    color: #333333;
+    font-size: 16px;
+    margin: 10px 0;
+
+}
+
+#Clique_aqui {
+    background-color: #00509e;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+#Clique_aqui:hover {
+    background-color: #003f7f;
+}
+
+#Clique_aqui:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#formulario {
+    display: none;
+    margin-top: 10px;
+    transform: translateY(-20%);
+}
+
+#psenha {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #cce7ff;
+    background-color: #f9fcff;
+    color: #00509e;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#psenha:hover {
+    border-color: #888;
+}
+
+#psenha:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#delete {
+    background-color: #ff4d4d;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+#delete:hover {
+    background-color: #cc0000;
+}
+
+#delete:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#erro {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#Clique_aqui:active + #delete-container #formulario {
+    display: block;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}

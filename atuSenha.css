@@ -1,0 +1,121 @@
+body {
+    display: inline;
+    background-image: url(../../fotos/ExtremeMakeoverHarleyEdition_1.png);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+header {
+    background-color: transparent; 
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav>button {
+    background-color: #ffffff;
+    color: #00509e; 
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav>button:hover {
+    background-color: #003f7f; 
+    color: #ffffff; 
+    border-color: #003f7f;
+}
+
+nav>button:active {
+    transform: scale(0.95); 
+}
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+h2 {
+    color: #00509e; 
+    font-size: 24px;
+    text-align: center;
+    margin-top: 100px; 
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+
+#container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px auto;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00509e;
+    font-weight: bold;
+}
+
+
+#pemail,
+#psenha {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #cce7ff;
+    border-radius: 5px;
+    background-color: #f9fcff;
+    color: #00509e;
+    font-size: 14px;
+}
+
+#pemail:focus,
+#psenha:focus {
+    border-color: #00509e;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 80, 158, 0.5);
+}
+
+
+#penviar {
+    background-color: #00509e;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+#penviar:hover {
+    background-color: #003f7f;
+}
+
+
+p {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}

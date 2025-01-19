@@ -1,0 +1,122 @@
+body {
+    display: inline;
+    background-image: url(../../fotos/Post\ Instagram\ Médico\ Clínico\ Moderno\ Simples\ Azul\ Branco.png);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+header {
+    background-color: transparent; 
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav>button {
+    background-color: #ffffff;
+    color: #00509e; 
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav>button:hover {
+    background-color: #003f7f; 
+    color: #ffffff; 
+    border-color: #003f7f;
+}
+
+nav>button:active {
+    transform: scale(0.95); 
+}
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+a {
+    color: red;
+}
+
+
+form {
+    background-color: #ffffff; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 400px;
+}
+
+h2 {
+    color: #00509e; 
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00509e;
+    font-weight: bold;
+}
+
+#paciente,
+#dataHora,
+select {
+    width: 95%;
+    
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #cce7ff;
+    border-radius: 5px;
+    background-color: #f9fcff;
+    color: #00509e;
+    font-size: 14px;
+}
+
+#paciente:focus,
+#dataHora:focus,
+select:focus {
+    border-color: #00509e;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 80, 158, 0.5);
+}
+
+#enviar{
+    background-color: #00509e;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+#enviar:hover {
+    background-color: #003f7f;
+}
+
+br {
+    display: block;
+    margin: 10px 0;
+}
+
+select {
+    appearance: none;
+    background-size: 16px;
+}
