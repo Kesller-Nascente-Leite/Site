@@ -23,15 +23,15 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
 
     <link rel="stylesheet" href="admin.css">
     <script>
-        function home() {
-            location.href = "site.php";
+        function usuarios() {
+            location.href = "usuarios.php";
         }
 
-        function atendimento() {
-            location.href = 'atendimento.php';
+        function adicionarMedico() {
+            location.href = 'adicionarMedico.php';
         }
-        function agendamento() {
-            location.href = 'agendamento.php';
+        function removedor() {
+            location.href = 'removedor.php';
         }
 
         function perfil() {
@@ -43,12 +43,17 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
 <body>
     <header>
         <nav>
-            <button type="button" name="home" onclick="home()">Tabela de Usuarios</button>
-            <button type="button" onclick="atendimento()">Adicionar medico</button>
-            <button type="button" onclick="agendamento()">Remover Medicos/Pacientes</button>
+            <button type="button" name="usuarios" onclick="usuarios()">Tabela de Usuarios</button>
+            <button type="button" onclick="adicionarMedico()">Adicionar medico</button>
+            <button type="button" onclick="removedor()">Remover Medicos/Pacientes</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>
     </header>
+    <main>
+        <article>
+            
+        </article>
+    </main>
 </body>
 
 </html>

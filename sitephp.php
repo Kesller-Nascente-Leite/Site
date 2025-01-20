@@ -25,7 +25,7 @@ class Consulta
     {
         try {
 
-            $query = "INSERT INTO consulta(id_paciente,id_tipo_consulta,id_medico,data_horario_consulta) VALUES(:paciente,:consulta,:medico,:data_horario)";
+            $query = "INSERT INTO consulta(id_paciente,id_tipo_consulta,id_medico,data_horario) VALUES(:paciente,:consulta,:medico,:data_horario)";
             $stmt = $this->conn->prepare($query);
 
             if (
@@ -33,7 +33,7 @@ class Consulta
                     ':paciente' => $_SESSION['id'],
                     ':consulta' => $this->consulta,
                     ':medico' => $this->medico,
-                    ':data_horario_consulta' => $this->dataHora
+                    ':data_horario' => $this->dataHora
                 ])
             ) {
                 GerenciadorSessao::setMensagem("Agendamento feito com sucesso!");
@@ -75,11 +75,11 @@ class Formulario extends Consulta
     public function verificarDisponibilidadeDoMedico()
     {
         try {
-            $query = "SELECT * FROM consulta WHERE id_medico = :id_medico AND data_horario_consulta = :data_horario_consulta";
+            $query = "SELECT * FROM consulta WHERE id_medico = :id_medico AND data_horario = :data_horario";
             $stmt = $this->conn->prepare($query);
             $stmt->execute([
                 ":id_medico" => $this->medico,
-                ":data_horario_consulta" => $this->dataHora
+                ":data_horario" => $this->dataHora
             ]);
             if ($stmt->rowCount() > 0) {
                 GerenciadorSessao::setMensagem("O médico está ocupado neste horário.");
@@ -97,6 +97,7 @@ class Formulario extends Consulta
 
 
 $consulta = new Consulta($conn, $_POST['dataHora'], $_POST['consulta'], $_POST['medico']);
+
 $formulario = new Formulario($conn, $_POST['dataHora'], $_POST['medico']);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" and isset($_POST['enviar'])) {

@@ -14,40 +14,42 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
     GerenciadorSessao::limparSessao();
     exit();
 }
-// Verificar se o usuário está logado e é paciente
-if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'paciente') {
-    $nome = $_SESSION['nome'];
-    $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
-} else {
-    GerenciadorSessao::setMensagem("login Necessário");
-    GerenciadorSessao::redirecionar("index.php");
-    GerenciadorSessao::limparSessao();
-    exit();
-}
+
 
 // Função para buscar médicos pela especialização
-function getMedicosByEspecializacao($especializacaoId)
+
+function getMedicosEspecializacao($especializacaoId)
 {
-    global $pdo;
+    global $conn;
     $query = "SELECT m.id_usuario, u.nome
-            FROM medico m
-            JOIN usuarios u ON m.id_usuario = u.id
-            WHERE m.id_especializacao = ?";
-    $stmt = $pdo->prepare($query);
+              FROM medico m
+              JOIN usuarios u ON m.id_usuario = u.id
+              WHERE m.id_especializacao = ?";
+    $stmt = $conn->prepare($query);
     $stmt->execute([$especializacaoId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Verificar se é uma requisição AJAX para retornar médicos
-if (isset($_GET['consulta_id'])) {
-    $consultaId = $_GET['consulta_id'];
-    $medicos = getMedicosByEspecializacao($consultaId);
-    echo json_encode($medicos);
+// AJAX: Retorna médicos em JSON
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['consulta_id'])) {
+    $especializacaoId = intval($_POST['consulta_id']);
+    $medicos = getMedicosEspecializacao($especializacaoId);
+
+    if (empty($medicos)) {
+        echo json_encode(['erro' => 'Sem médicos disponíveis para essa especialização.']);
+    } else {
+        echo json_encode($medicos);
+    }
     exit();
 }
 
-$especializacaoId = isset($_POST['consulta']) ? $_POST['consulta'] : null;
-$medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [];
+$especializacaoId = null;
+$medicos = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['consulta'])) {
+    $especializacaoId = intval($_POST['consulta']);
+    $medicos = getMedicosEspecializacao($especializacaoId);
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,8 +60,10 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site</title>
     <link rel="stylesheet" href="siteCSS.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
-        //criando funcionalidade do botão para redirecionar para as outras abas
+
         function home() {
             location.href = "site.php";
         }
@@ -72,37 +76,29 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
 
         function atendimento() {
             location.href = 'atendimento.php';
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            const consultaSelect = document.getElementById("consulta");
-            const medicoSelect = document.getElementById("medico");
+        } $(document).ready(function () {
+            $('#consulta').change(function () {
+                var consultaId = $(this).val();
 
-            consultaSelect.addEventListener("change", function () {
-                const consultaId = consultaSelect.value;
+                // Limpa o select de médicos
+                $('#medico').html('<option value="" disabled selected>Selecione um médico</option>');
 
-                // Limpar as opções do médico
-                medicoSelect.innerHTML = `<option value="" disabled selected>Selecione um médico</option>`;
-
-                // Se uma consulta for selecionada, buscar os médicos via AJAX
                 if (consultaId) {
-                    fetch(`site.php?consulta_id=${consultaId}`)
-                        .then(response => response.json())
-                        .then(medicos => {
-                            // Verificar se médicos foram encontrados
-                            if (medicos.length > 0) {
-                                medicos.forEach(medico => {
-                                    const option = document.createElement("option");
-                                    option.value = medico.id_usuario; // ID do médico
-                                    option.textContent = medico.nome; // Nome do médico
-                                    medicoSelect.appendChild(option);
-                                });
-                            } else {
-                                medicoSelect.innerHTML = `<option value="" disabled>Sem médicos disponíveis para essa especialização</option>`;
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Erro ao buscar médicos:', error);
-                        });
+                    $.post('site.php', { consulta_id: consultaId }, function (data) {
+                        console.log(data); 
+                        if (data.erro) {
+                            $('#medico').html('<option value="" disabled>' + data.erro + '</option>');
+                        } else {
+                            var options = '';
+                            $.each(data, function (index, medico) {
+                                options += '<option value="' + medico.id_usuario + '">' + medico.nome + '</option>';
+                            });
+                            $('#medico').html(options);
+                        }
+                    }, 'json').fail(function () {
+                        alert('Erro ao carregar médicos.');
+                    });
+
                 }
             });
         });
@@ -128,6 +124,7 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
             });
         });
 
+
     </script>
 </head>
 
@@ -146,7 +143,7 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
             <center>
                 <h2>Faça seu agendamento aqui!</h2>
 
-                <form method="POST" action="sitephp.php" autocomplete="off">
+                <form method="POST" action="<?php echo htmlspecialchars('sitephp.php'); ?>" autocomplete="off">
                     <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
 
                     <label for="paciente">Nome do Paciente:</label>
@@ -167,20 +164,18 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
                         <option value="5" <?php echo $especializacaoId == 5 ? 'selected' : ''; ?>>Dermatologia</option>
                     </select>
                     <br>
-
                     <label for="medico">Escolha o seu Doutor/a:</label>
                     <select id="medico" name="medico" required>
                         <option value="" disabled selected>Selecione um médico</option>
-                        <?php
-                        if ($medicos) {
-                            foreach ($medicos as $medico) {
-                                echo "<option value='{$medico['id_usuario']}'>{$medico['nome']}</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-                    <br>
-                    <input type="submit" value="Marcar" name="enviar" id="enviar">
+                        <?php if ($medicos): ?>
+                            <?php foreach ($medicos as $medico): ?>
+                                <option value="<?= $medico['id_usuario'] ?>"><?= htmlspecialchars($medico['nome']) ?></option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="" disabled>Sem médicos disponíveis para essa especialização</option>
+                        <?php endif; ?>
+                    </select><br>
+
                     <?php
                     $mensagem = GerenciadorSessao::getMensagem();
                     if ($mensagem) {
@@ -188,6 +183,7 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
                     }
                     ?>
 
+                    <input type="submit" value="Marcar" name="enviar" id="enviar">
                 </form>
             </center>
         </section>
@@ -195,4 +191,4 @@ $medicos = $especializacaoId ? getMedicosByEspecializacao($especializacaoId) : [
 
 </body>
 
-</html
+</html>

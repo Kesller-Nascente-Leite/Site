@@ -36,10 +36,10 @@ class Agendamento
                 echo "<tr><th>Paciente</th><th>Médico</th><th>Especialização</th><th>Data da Consulta</th><th>Observações/Diagnóstico</th></tr>\n";
                 while ($linha = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "\t<tr>\n";
-                    echo "\t\t<td>" . htmlspecialchars($linha['paciente']) . "</td>\n";
-                    echo "\t\t<td>" . htmlspecialchars($linha['nome_medico']) . "</td>\n";
+                    echo "\t\t<td>" . htmlspecialchars($linha['paciente_nome']) . "</td>\n";
+                    echo "\t\t<td>" . htmlspecialchars($linha['medico_nome']) . "</td>\n";
                     echo "\t\t<td>" . htmlspecialchars($linha['especializacao']) . "</td>\n";
-                    echo "\t\t<td>" . htmlspecialchars($linha['data_horario_consulta']) . "</td>\n";
+                    echo "\t\t<td>" . htmlspecialchars($linha['data_horario']) . "</td>\n";
                     echo "\t\t<td>" . htmlspecialchars($linha['observacoes_diagnostico']) . "</td>\n";
                     echo "\t</tr>\n";
                 }

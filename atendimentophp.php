@@ -22,10 +22,10 @@ class Atendimento
     {
         try {
 
-            $query = 'SELECT usuarios.nome, pontuario.observacoes_gerais, pontuario.historico_atendimento 
-        FROM pontuario 
-        INNER JOIN usuarios ON pontuario.id_usuario = usuarios.id
-        WHERE pontuario.id_usuario =:id';
+            $query = 'SELECT usuarios.nome, prontuario.observacoes_gerais, prontuario.historico_atendimento 
+        FROM prontuario 
+        INNER JOIN usuarios ON prontuario.id_usuario = usuarios.id
+        WHERE prontuario.id_usuario =:id';
 
             $stmt = $this->conn->prepare($query);
 
@@ -61,7 +61,7 @@ class Atendimento
     public function totalDeAtendimentos()
     {
         try {
-            $query = 'SELECT COUNT(*) FROM pontuario WHERE id_usuario = :id';
+            $query = 'SELECT COUNT(*) FROM prontuario WHERE id_usuario = :id';
 
             $stmt = $this->conn->prepare($query);
             $stmt->execute([':id' => $this->id]);
