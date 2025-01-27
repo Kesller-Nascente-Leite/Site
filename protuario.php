@@ -1,17 +1,11 @@
 <?php
 require_once "Session_start.php";
-require_once "atendimentophp.php";
+require_once 'protuarioBackAnd.php';
 require "verifica_sessao.php";
 require_once "GerenciadorDeSessoes.php";
+require_once 'verificaAutenticacao.php';
 
-if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'paciente') {
-    
-} else {
-    GerenciadorSessao::setMensagem("login Necessario");
-    GerenciadorSessao::redirecionar("index.php");
-    GerenciadorSessao::limparSessao();
-    exit();
-}
+Autenticacao::AutenticacaoPaciente();
 
 ?>
 <!DOCTYPE html>
@@ -20,14 +14,14 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="atendimento.css">
+    <link rel="stylesheet" href="protuario.css">
     <title>Meus atendimentos</title>
     <script>
         function home() {
             location.href = "site.php";
         }
-        function atendimento() {
-            location.href = 'atendimento.php';
+        function Protuario() {
+            location.href = 'protuario.php';
         }
         function agendamento() {
             location.href = 'agendamento.php';
@@ -44,7 +38,7 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
         <nav>
 
             <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="atendimento()">Atendimentos</button>
+            <button type="button" onclick="Protuario()">Prontuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>
@@ -52,12 +46,12 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
     <main>
         <article>
             <center>
-                <h2>Atendimentos Realizados</h2>
+                <h2>Protuario Adicionadas</h2>
                 <br>
                 <?php
 
-                $atendimento->historico();
-                echo "<br><p>Total de Atendimentos: " . $atendimento->totalDeAtendimentos() . "</p>";
+                $protuario->historico();
+                echo "<br><p>Total de Prontuarios: " . $protuario->totalDeAtendimentos() . "</p>";
 
                 ?>
             </center>

@@ -29,6 +29,11 @@ class Usuario
             GerenciadorSessao::redirecionar("index.php");
             exit();
         }
+        if (strlen($this->senha) < 6) {
+            GerenciadorSessao::setMensagem("A senha deve ter pelo menos 6 caracteres.");
+            GerenciadorSessao::redirecionar("index.php");
+            exit();
+        }
     }
 
     public function login()
@@ -38,13 +43,12 @@ class Usuario
 
             $query = "SELECT * FROM usuarios WHERE email = :email";
 
-            $procurando = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
+            if ($stmt->execute([':email' => $this->email])) {
 
-            if ($procurando->execute([':email' => $this->email])) {
+                $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $usuario = $procurando->fetch(PDO::FETCH_ASSOC);
-
-                if ($usuario and password_verify($this->senha, $usuario['senha'])) {
+                if ($usuario && password_verify($this->senha, $usuario['senha'])) {
 
                     $_SESSION['id'] = $usuario['id'];
                     $_SESSION['email'] = $usuario['email'];
@@ -59,6 +63,7 @@ class Usuario
                             GerenciadorSessao::redirecionar("site.php");
                             break;
                         case 'Medico':
+                            //$_SESSION[];
                             GerenciadorSessao::redirecionar("medico.php");
                             break;
                         case 'Admin':
@@ -69,12 +74,12 @@ class Usuario
                             GerenciadorSessao::redirecionar("index.php");
                             exit();
                     }
-
                 } else {
                     GerenciadorSessao::setMensagem("Erro ao realizar o login");
                     GerenciadorSessao::redirecionar("index.php");
                     exit();
                 }
+                
             } else {
                 GerenciadorSessao::setMensagem("Erro ao realizar o login");
                 GerenciadorSessao::redirecionar("index.php");
@@ -91,7 +96,7 @@ class Usuario
 }
 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" and isset($_POST['submit'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $tokenRecebido = $_POST['csrf_token'] ?? '';
 
     Csrf::verificarToken($tokenRecebido);

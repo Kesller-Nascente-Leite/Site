@@ -1,17 +1,11 @@
 <?php
 require "verifica_sessao.php";
-require "agendamentophp.php";
+require "agendamentoBackAnd.php";
 require_once "Session_start.php";
 require_once "GerenciadorDeSessoes.php";
-if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'paciente') {
+require_once 'verificaAutenticacao.php';
 
-} else {
-    GerenciadorSessao::setMensagem("login Necessario");
-    GerenciadorSessao::redirecionar("index.php");
-    GerenciadorSessao::limparSessao();
-    exit();
-}
-
+Autenticacao::AutenticacaoPaciente();
 
 ?>
 
@@ -25,20 +19,20 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
     <link rel="stylesheet" href="agendamento.css">
     <title>Agendamento</title>
     <script>
+
         function home() {
             location.href = "site.php";
         }
-
-        function atendimento() {
-            location.href = 'atendimento.php';
+        function Protuario() {
+            location.href = 'protuario.php';
         }
         function agendamento() {
             location.href = 'agendamento.php';
         }
-
         function perfil() {
             location.href = "perfil.php";
         }
+
     </script>
 </head>
 
@@ -46,7 +40,7 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'pa
     <header>
         <nav>
             <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="atendimento()">Atendimentos</button>
+            <button type="button" onclick="Protuario()">Protuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>

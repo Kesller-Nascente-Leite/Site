@@ -3,16 +3,9 @@ require 'csrfPROTECAO.php';
 require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
 require_once "../../configdb.php";
+require_once 'verificaAutenticacao.php';
 
-
-if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'admin') {
-
-} else {
-    GerenciadorSessao::setMensagem("login Necessario");
-    GerenciadorSessao::redirecionar("index.php");
-    GerenciadorSessao::limparSessao();
-    exit();
-}
+Autenticacao::AutenticacaoAdmin();
 ?>
 
 
@@ -35,9 +28,8 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
         function removedor() {
             location.href = 'removedor.php';
         }
-
         function perfil() {
-            location.href = "perfil.php";
+            location.href = "perfilAdm.php";
         }
         document.addEventListener("DOMContentLoaded", function () {
             const dataInput = document.getElementById("nascimento");
@@ -65,7 +57,7 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
                 <div id="container">
 
                     <form method="POST" autocomplete="off"
-                        action="<?php echo htmlspecialchars('adicionarMedicophp.php'); ?>">
+                        action="<?php echo htmlspecialchars('adicionarMedicoBackAnd.php'); ?>">
 
                         <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
                         <label for="nome">Nome completo do Medico:</label>
@@ -114,8 +106,6 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
                             ?>
                         </Select>
                         <input type="submit" name="enviar" id="enviar" value="Cadastrar">
-
-
 
                         </Select>
                         <?php

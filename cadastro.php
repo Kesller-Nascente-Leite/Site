@@ -15,11 +15,12 @@ require_once "GerenciadorDeSessoes.php";
     <link rel="stylesheet" href="cadastro.css">
 
     <script>
+
         function home() {
             location.href = "site.php";
         }
-        function atendimento() {
-            location.href = 'atendimento.php';
+        function Protuario() {
+            location.href = 'protuario.php';
         }
         function agendamento() {
             location.href = 'agendamento.php';
@@ -44,7 +45,7 @@ require_once "GerenciadorDeSessoes.php";
         <nav>
 
             <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="atendimento()">Atendimentos</button>
+            <button type="button" onclick="Protuario()">Protuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>
@@ -56,7 +57,7 @@ require_once "GerenciadorDeSessoes.php";
                 <h1>Cadastro</h1><br>
                 <div id="container">
 
-                    <form method="POST" autocomplete="off" action="<?php echo htmlspecialchars('cadastrophp.php'); ?>">
+                    <form method="POST" autocomplete="off" action="<?php echo htmlspecialchars('cadastroBackAnd.php'); ?>">
 
                         <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
                         <label for="nome">Nome completo do Paciente:</label>
@@ -70,7 +71,7 @@ require_once "GerenciadorDeSessoes.php";
 
                         <label for="psenha">Senha:</label>
                         <input type="password" placeholder="No mínimo 8 caracteres com letras e números" name="senha"
-                            id="senha" minlength="8" maxlength="50"required>
+                            id="senha" minlength="8" maxlength="50" required>
                         <br>
 
                         <label for="Data de nascimento">Data de Nascimento</label>
@@ -80,7 +81,7 @@ require_once "GerenciadorDeSessoes.php";
                         <label for="Telefone">Telefone</label>
                         <input type="tel" name="telefone" id="tel" minlength="8" maxlength="12"
                             placeholder="XX XXXX-XXXX" required><br>
-                            
+
                         <label for="sexo">Sexo:</label><br>
                         <select name="sexo" id="sexo">
                             <option value="1">Masculino</option>

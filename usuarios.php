@@ -1,8 +1,9 @@
 <?php
-require 'usuariosphp.php';
+require 'usuariosBackAnd.php';
+require_once 'verificaAutenticacao.php';
+
+Autenticacao::AutenticacaoAdmin();
 $usuario = new MostrandoUsuarios($conn);
-
-
 
 
 ?>
@@ -25,7 +26,7 @@ $usuario = new MostrandoUsuarios($conn);
             location.href = 'removedor.php';
         }
         function perfil() {
-            location.href = "perfil.php";
+            location.href = "perfilAdm.php";
         }
     </script>
 </head>
@@ -48,26 +49,26 @@ $usuario = new MostrandoUsuarios($conn);
         </form>
 
         </form>
-        
-            <?php
-            
-            $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-            $limite = 50;
-            $offset = ($pagina - 1) * $limite;
 
-            
-            $usuario->usuarios($filtro, $offset, $limite);
+        <?php
 
-            
-            echo '<div id="paginacao">';
-            if ($pagina > 1) {
-                echo '<a href="?pagina=' . ($pagina - 1) . '&pesquisa=' . urlencode($filtro) . '">⬅ Anterior</a>';
-            }
-            echo '<span>Página ' . $pagina . '</span>';
-            echo '<a href="?pagina=' . ($pagina + 1) . '&pesquisa=' . urlencode($filtro) . '">Próxima ➡</a>';
-            echo '</div>';
-            ?>
-        
+        $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
+        $limite = 50;
+        $offset = ($pagina - 1) * $limite;
+
+
+        $usuario->usuarios($filtro, $offset, $limite);
+
+
+        echo '<div id="paginacao">';
+        if ($pagina > 1) {
+            echo '<a href="?pagina=' . ($pagina - 1) . '&pesquisa=' . urlencode($filtro) . '">⬅ Anterior</a>';
+        }
+        echo '<span>Página ' . $pagina . '</span>';
+        echo '<a href="?pagina=' . ($pagina + 1) . '&pesquisa=' . urlencode($filtro) . '">Próxima ➡</a>';
+        echo '</div>';
+        ?>
+
     </main>
 </body>
 

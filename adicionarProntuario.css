@@ -1,0 +1,155 @@
+body {
+    display: inline;
+    background-image: url(../../fotos/gestaoHospitalar.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #00509e;
+}
+
+header {
+    background-color: transparent;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav>button {
+    background-color: #ffffff;
+    color: #00509e;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav>button:hover {
+    background-color: #003f7f;
+    color: #ffffff;
+    border-color: #003f7f;
+}
+
+nav>button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    margin: 100px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #003f7f;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.mensagem {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.sucesso {
+    background-color: #28a745;
+    color: white;
+}
+
+.erro {
+    background-color: #dc3545;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #00509e;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #003f7f;
+}
+
+form button {
+    background-color: #00509e;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background-color: #003f7f;
+}
+
+form button:active {
+    transform: scale(0.95);
+}
+
+a {
+    color: #00509e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #003f7f;
+}
+
+@media (max-width: 600px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    form input[type="number"],
+    form textarea,
+    form button {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,155 @@
+
+body {
+    display: inline;
+    background-image: url(../../fotos/gestaoHospitalar.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #00509e;
+}
+header {
+    background-color: transparent; 
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav > button {
+    background-color: #ffffff;
+    color: #00509e; 
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav > button:hover {
+    background-color: #003f7f; 
+    color: #ffffff; 
+    border-color: #003f7f;
+}
+
+nav > button:active {
+    transform: scale(0.95); 
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+h1, h2 {
+    color: #00509e; 
+    text-align: center;
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse; 
+    background-color: #ffffff; 
+    font-size: 16px; 
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: 20px auto; 
+    overflow: hidden; 
+}
+
+table td,
+table th {
+    border: 1px solid #cce7ff; 
+    padding: 10px; 
+    text-align: center; 
+    color: #00509e; 
+}
+
+table th {
+    background-color: #00509e; 
+    color: #ffffff; 
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f0f8ff; 
+}
+
+table tr:nth-child(odd) {
+    background-color: #ffffff; 
+}
+p {
+    color: rgb(0, 149, 255); 
+    font-style: italic; 
+    text-align: center; 
+    margin: 10px 0;
+}
+form input[type="text"], form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #00509e;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #003f7f;
+}
+form button, form input[type="submit"] {
+    background-color: #00509e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover, form input[type="submit"]:hover {
+    background-color: #003f7f;
+}
+
+form button:active, form input[type="submit"]:active {
+    transform: scale(0.95);
+}
+a {
+    color: #00509e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #003f7f;
+}
+#paginacao {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#paginacao a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #cce7ff;
+    border-radius: 5px;
+    color: #00509e;
+    background-color: white;
+}
+
+#paginacao a:hover {
+    background-color: #00509e;
+    color: white;
+}

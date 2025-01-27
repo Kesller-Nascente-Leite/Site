@@ -26,7 +26,6 @@ class Csrf
         }
     }
 
-
     public static function limparToken()
     {
         unset($_SESSION['csrf_token']);

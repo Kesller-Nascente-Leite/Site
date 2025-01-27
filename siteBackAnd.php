@@ -3,6 +3,9 @@ require "../../configdb.php";
 require "verifica_sessao.php";
 require_once "csrfPROTECAO.php";
 require_once "GerenciadorDeSessoes.php";
+require_once 'verificaAutenticacao.php';
+
+Autenticacao::AutenticacaoPaciente();
 class Consulta
 {
 
@@ -46,15 +49,14 @@ class Consulta
             echo "Erro: $e";
         }
     }
-    
+
 }
 
 
-class Formulario extends Consulta
+class Formulario 
 {
     private $conn;
     private $dataHora;
-
     private $medico;
     public function __construct($conn, $dataHora, $medico)
     {
@@ -65,7 +67,7 @@ class Formulario extends Consulta
     }
     public function formularioVazio()
     {
-        if (isset($_POST['enviar']) && (empty($_POST['dataHora']) || empty($_POST['consulta']) || empty($_POST['medico']))) {
+        if (empty($_POST['dataHora']) || empty($_POST['consulta']) || empty($_POST['medico'])) {
 
             GerenciadorSessao::setMensagem("Preencha o formulario");
             GerenciadorSessao::redirecionar("site.php");

@@ -1,0 +1,166 @@
+body {
+    display: inline;
+    background-image: url(../../fotos/Blue\ Corporate\ Medical\ Medium\ Banner.png);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #00509e;
+}
+
+header {
+    background-color: transparent;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav>button {
+    background-color: #ffffff;
+    color: #00509e;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav>button:hover {
+    background-color: #003f7f;
+    color: #ffffff;
+    border-color: #003f7f;
+}
+
+nav>button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}main {
+    margin-top: 100px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #003f7f;
+    font-weight: bold;
+}
+
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: left;
+    color: #00509e;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #00509e;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    color: #003f7f;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.form-container input:focus {
+    border-color: #003f7f;
+    background-color: #ffffff;
+}
+
+
+.form-container #enviar {
+    background-color: #00509e;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-container #enviar:hover {
+    background-color: #003f7f;
+    color: #ffffff;
+}
+
+.form-container #enviar:active {
+    transform: scale(0.95);
+}
+
+
+@media (max-width: 600px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-container h2 {
+        font-size: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #00509e;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    color: #003f7f;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    appearance: none; 
+    background-image: url('../../fotos/dropdown-arrow.png'); 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
+}
+
+.form-container select:focus {
+    border-color: #003f7f;
+    background-color: #ffffff;
+}

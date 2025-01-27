@@ -64,7 +64,7 @@ class AtualizarSenha
         try {
             $SenhaCripto = password_hash($this->senha, PASSWORD_DEFAULT);
             $id = $this->nome['id'];
-            if ($this->nome['id'] != 7) {
+            if ($this->nome['id'] != 1) {
                 $query = "UPDATE usuarios SET senha = :senha WHERE id = :id ";
 
                 $stmt = $this->conn->prepare($query);
@@ -97,7 +97,7 @@ class AtualizarSenha
 }
 $atualizandoSenha = new AtualizarSenha($conn, $_POST['email'], $_POST['senha']);
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['enviar'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         $tokenRecebido = $_POST['csrf_token'] ?? '';

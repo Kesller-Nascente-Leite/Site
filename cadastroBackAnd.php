@@ -84,7 +84,7 @@ class Cadastro
     public function cadastrando()
     {
         try {
-            $usuario = '';
+            $usuario = null;
             $cripto = password_hash($this->senha, PASSWORD_DEFAULT);
 
             $query = "INSERT INTO usuarios (nome,email,senha,data_nascimento,telefone,id_sexo,tipo_usuario) VALUES (:nome,:email,:senha,:data_nascimento,:telefone,:sexo,:tipo_usuario)";
@@ -150,4 +150,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 }
+
 

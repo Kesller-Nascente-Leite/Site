@@ -3,7 +3,9 @@ require 'csrfPROTECAO.php';
 require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
 require "../../configdb.php";
+require_once 'verificaAutenticacao.php';
 
+Autenticacao::AutenticacaoAdmin();
 class VerificaFormulario
 {
 
@@ -30,6 +32,11 @@ class VerificaFormulario
         $this->telefone = trim($telefone);
         $this->tipoUsuario = trim($tipoUsuario);
         $this->especializacao = trim($especializacao);
+    }
+    public function verificandoFormularioVazio()
+    {
+        return empty($this->nome) || empty($this->email) || empty($this->sexo) ||
+            empty($this->senha) || empty($this->nascimento) || empty($this->telefone || empty($this->especializacao));
     }
 
     public function checandoFormulario()
@@ -117,45 +124,44 @@ class AdicionandoMedico
 
     public function addMedico()
     {
-        $cripto = password_hash($this->senha, PASSWORD_DEFAULT);
+        try {
+            $cripto = password_hash($this->senha, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO usuarios (nome,email,senha,data_nascimento,telefone,id_sexo,tipo_usuario) VALUES (:nome,:email,:senha,:data_nascimento,:telefone,:sexo,:tipo_usuario)";
-        $enviando = $this->conn->prepare($query);
+            $query = "INSERT INTO usuarios (nome,email,senha,data_nascimento,telefone,id_sexo,tipo_usuario) VALUES (:nome,:email,:senha,:data_nascimento,:telefone,:sexo,:tipo_usuario)";
+            $enviando = $this->conn->prepare($query);
 
-        // Mudando de ultima hora e colocando por um array
-        if (
-            $enviando->execute([
-                ':nome' => $this->nome,
-                ':email' => $this->email,
-                ':senha' => $cripto,
-                ':data_nascimento' => $this->nascimento,
-                ':telefone' => $this->telefone,
-                ':sexo' => $this->sexo,
-                ':tipo_usuario' => $this->tipoUsuario
+            if (
+                $enviando->execute([
+                    ':nome' => $this->nome,
+                    ':email' => $this->email,
+                    ':senha' => $cripto,
+                    ':data_nascimento' => $this->nascimento,
+                    ':telefone' => $this->telefone,
+                    ':sexo' => $this->sexo,
+                    ':tipo_usuario' => $this->tipoUsuario
 
-            ])
-        ) {
+                ])
+            ) {
 
-            $ultimoID = $this->conn->lastInsertId();
+                $ultimoID = $this->conn->lastInsertId();
 
-            $query = "INSERT INTO medico(id_usuario,id_especializacao) VALUES (:id_usuario,:id_especializacao)";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id_usuario', $ultimoID);
-            $stmt->bindParam(':id_especializacao', $this->especializacao);
-            $stmt->execute();
+                $query = "INSERT INTO medico(id_usuario,id_especializacao) VALUES (:id_usuario,:id_especializacao)";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':id_usuario', $ultimoID);
+                $stmt->bindParam(':id_especializacao', $this->especializacao);
+                $stmt->execute();
 
-            GerenciadorSessao::setMensagem("<p style='color:green'>Medico cadastrado com sucesso </p>");
-            GerenciadorSessao::redirecionar("adicionarMedico.php");
-            exit();
+                GerenciadorSessao::setMensagem("<p style='color:green'>Medico cadastrado com sucesso </p>");
+                GerenciadorSessao::redirecionar("adicionarMedico.php");
+                exit();
+            }
+        } catch (Exception $e) {
+            throw new Exception("erro: " . $e);
         }
     }
 }
 
 
-$verificacao = new VerificaFormulario($conn, $_POST['nome'], $_POST['email'], $_POST['sexo'], $_POST['senha'], $_POST['nascimento'], $_POST['telefone'], 'Medico', $_POST['especializacao']);
-
-
-$addMedico = new AdicionandoMedico($conn, $_POST['nome'], $_POST['email'], $_POST['sexo'], $_POST['senha'], $_POST['nascimento'], $_POST['telefone'], 'Medico', $_POST['especializacao']);
 
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -164,11 +170,28 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         Csrf::verificarToken($tokenRecebido);
         Csrf::limparToken();
 
-        $verificacao->checandoFormulario();
-        $verificacao->checandoEmail();
+        $nome = $_POST['nome'] ?? '';
+        $email = $_POST['email'] ?? '';
+    $sexo = $_POST['sexo'] ?? '';
+        $senha = $_POST['senha'] ?? '';
+        $nascimento = $_POST['nascimento'] ?? '';
+        $telefone = $_POST['telefone'] ?? '';
+        $especializacao = $_POST['especializacao'] ?? '';
+        
+        $verificacao = new VerificaFormulario($conn, $_POST['nome'], $_POST['email'], $_POST['sexo'], $_POST['senha'], $_POST['nascimento'], $_POST['telefone'], 'Medico', $_POST['especializacao']);
 
-        $addMedico->addMedico();
+        $addMedico = new AdicionandoMedico($conn, $_POST['nome'], $_POST['email'], $_POST['sexo'], $_POST['senha'], $_POST['nascimento'], $_POST['telefone'], 'Medico', $_POST['especializacao']);
 
+        if ($verificacao->verificandoFormularioVazio() == false) {
+            $verificacao->checandoFormulario();
+            $verificacao->checandoEmail();
+
+            $addMedico->addMedico();
+        } else {
+            GerenciadorSessao::setMensagem("Você precisa Preencher o formulario por completo");
+            GerenciadorSessao::redirecionar("adicionarMedico.php");
+            exit();
+        }
     } catch (Exception $e) {
         throw new ErrorException("<p style='color:red'>Algo errado com o banco de dados: " . $e . " </p>");
     } catch (PDOException $e) {

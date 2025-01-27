@@ -2,15 +2,9 @@
 require 'csrfPROTECAO.php';
 require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
+require_once 'verificaAutenticacao.php';
 
-if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'admin') {
-
-} else {
-    GerenciadorSessao::setMensagem("login Necessario");
-    GerenciadorSessao::redirecionar("index.php");
-    GerenciadorSessao::limparSessao();
-    exit();
-}
+Autenticacao::AutenticacaoAdmin();
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +29,7 @@ if (isset($_SESSION['id']) && strtolower(trim($_SESSION['tipo_usuario'])) == 'ad
         }
 
         function perfil() {
-            location.href = "perfil.php";
+            location.href = "perfilAdm.php";
         }
     </script>
 </head>

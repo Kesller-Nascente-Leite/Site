@@ -16,29 +16,27 @@ require_once "GerenciadorDeSessoes.php";
 </head>
 <script>
 
+
     function home() {
         location.href = "site.php";
     }
-
-    function atendimento() {
-        location.href = 'atendimento.php';
+    function Protuario() {
+        location.href = 'protuario.php';
     }
     function agendamento() {
         location.href = 'agendamento.php';
     }
-
     function perfil() {
         location.href = "perfil.php";
     }
+
 </script>
 
 <body>
-    <!--Falta o javaScrip-->
     <header>
         <nav>
-
             <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="atendimento()">Atendimentos</button>
+            <button type="button" onclick="Protuario()">Prontuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>
@@ -49,7 +47,7 @@ require_once "GerenciadorDeSessoes.php";
             <center>
                 <h1>Bem-Vindo</h1><br>
                 <div id="container">
-                    <form method="POST" autocomplete="on" action="<?php echo htmlspecialchars('loginphp.php'); ?>">
+                    <form method="POST" autocomplete="on" action="<?php echo htmlspecialchars('loginBackAnd.php'); ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
                         <label for="pemail">Email:
                             <input type="email" name="email" id="pemail" placeholder="Email" required>
@@ -70,7 +68,8 @@ require_once "GerenciadorDeSessoes.php";
 
                         }
                         ?>
-                        <!--Deixar menor e botar para um canto--><a href="atuSenha.php" id="Atualizar_senha">Esqueci minha senha!</a>
+                        <!--Deixar menor e botar para um canto--><a href="atuSenha.php" id="Atualizar_senha">Esqueci
+                            minha senha!</a>
                         <a href="cadastro.php" id="cadastro">Cadastrar-se!</a>
 
                         <br>

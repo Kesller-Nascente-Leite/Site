@@ -3,7 +3,9 @@ require 'csrfPROTECAO.php';
 require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
 require_once "../../configdb.php";
+require_once 'verificaAutenticacao.php';
 
+Autenticacao::AutenticacaoAdmin();
 class MostrandoUsuarios
 {
     private $conn;

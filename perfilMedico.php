@@ -1,10 +1,9 @@
 <?php
-require 'csrfPROTECAO.php';
 require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
+require_once '../../configdb.php';
 require_once 'verificaAutenticacao.php';
-
-Autenticacao::AutenticacaoPaciente();
+Autenticacao::AutenticacaoMedico();
 
 $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
 ?>
@@ -19,19 +18,20 @@ $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
     <link rel="stylesheet" href="perfil.css">
     <script>
 
-        function home() {
-            location.href = "site.php";
-        }
-        function Protuario() {
-            location.href = 'protuario.php';
-        }
-        function agendamento() {
-            location.href = 'agendamento.php';
-        }
-        function perfil() {
-            location.href = "perfil.php";
+        function AtendimentoEmEspera() {
+            location.href = "atendimentoEmEspera.php";
         }
 
+        function AdicionarPrescricao() {
+            location.href = 'adicionarPrescricao.php';
+        }
+        function adicionarProntuario() {
+            location.href = 'adicionarProntuario.php';
+        }
+
+        function home() {
+            location.href = "medico.php";
+        }
         document.addEventListener('DOMContentLoaded', function () {
             const buttonCliqueAqui = document.getElementById('Clique_aqui');
             const formulario = document.getElementById('formulario');
@@ -41,7 +41,6 @@ $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
                 buttonCliqueAqui.remove();
             });
         });
-
     </script>
 </head>
 
@@ -49,11 +48,10 @@ $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
 
     <header>
         <nav>
-
-            <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="Protuario()">Protuario</button>
-            <button type="button" onclick="agendamento()">Agendamento</button>
-            <button type="button" onclick="perfil()">Perfil</button>
+            <button type="button" name="usuarios" onclick="AtendimentoEmEspera()">Atendimento Em Espera</button>
+            <button type="button" onclick="AdicionarPrescricao()">Adicionar prescricao</button>
+            <button type="button" onclick="adicionarProntuario()">AdicionarProntuario</button>
+            <button type="button" name="usuarios" onclick="home()">Home</button>
         </nav>
     </header>
     <main>
@@ -71,7 +69,7 @@ $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
                     ?>
                 </form>
 
-                <h1>Informações Do Paciente</h1>
+                <h1>Informações Do Medico</h1>
                 <?php
                 
                     echo "<h1>Bem-vindo {$_SESSION['nome']}!</h1>";
@@ -81,18 +79,7 @@ $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));
                     $sexo = $_SESSION['sexo'] == '1' ? 'Masculino' : 'Feminino';
                     echo "<p>Sexo: $sexo</p>";
                 
-                ?>
 
-
-                <label for="Deletar a conta">Deletar a conta</label>
-                <input type="button" id="Clique_aqui" value="Clique aqui"><br>
-                <form id="formulario" action="<?php echo htmlspecialchars('perfilBackAnd.php'); ?>" method="post">
-                    <br>
-                    <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
-                    <input type="password" placeholder="Confirme a Sua senha" name="senha" id="psenha" required><br>
-                    <input type="submit" name="delete" id="delete" value="Confirmar">
-                </form>
-                <?php
                 $mensagem = GerenciadorSessao::getMensagem();
                 if ($mensagem) {
                     echo "<p>$mensagem</p>";

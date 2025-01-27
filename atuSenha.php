@@ -16,11 +16,12 @@ require_once "Session_start.php";
 
 <body>
     <script>
-        function home() {
+
+function home() {
             location.href = "site.php";
         }
-        function atendimento() {
-            location.href = 'atendimento.php';
+        function Protuario() {
+            location.href = 'protuario.php';
         }
         function agendamento() {
             location.href = 'agendamento.php';
@@ -28,12 +29,13 @@ require_once "Session_start.php";
         function perfil() {
             location.href = "perfil.php";
         }
+
     </script>
     <header>
         <nav>
 
             <button type="button" name="home" onclick="home()">Home</button>
-            <button type="button" onclick="atendimento()">Atendimentos</button>
+            <button type="button" onclick="Protuario()">Protuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>
         </nav>
@@ -44,7 +46,7 @@ require_once "Session_start.php";
             <center>
                 <h2>Digite seu email</h2>
                 <div id="container">
-                    <form action="<?php echo htmlspecialchars("atuSenhaphp.php") ?>" method="POST">
+                    <form action="<?php echo htmlspecialchars("atuSenhaBackAnd.php") ?>" method="POST">
                         
                     <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
                         <label for="pemail">Email:

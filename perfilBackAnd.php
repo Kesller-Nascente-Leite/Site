@@ -3,7 +3,9 @@ require "verifica_sessao.php";
 require_once "../../configdb.php";
 require_once "csrfPROTECAO.php";
 require_once "GerenciadorDeSessoes.php";
+require_once 'verificaAutenticacao.php';
 
+Autenticacao::AutenticacaoPaciente();
 class Perfilphp
 {
     private $conn;

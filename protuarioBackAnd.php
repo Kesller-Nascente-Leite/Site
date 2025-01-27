@@ -3,9 +3,11 @@ require_once "Session_start.php";
 require 'verifica_sessao.php';
 require_once "../../configdb.php";
 require_once "GerenciadorDeSessoes.php";
+require_once 'verificaAutenticacao.php';
 
+Autenticacao::AutenticacaoPaciente();
 
-class Atendimento
+class Protuario
 {
     private $conn;
     private $id;
@@ -76,7 +78,7 @@ class Atendimento
     }
 }
 
-$atendimento = new Atendimento($conn, $_SESSION['id']);
+$protuario = new Protuario($conn, $_SESSION['id']);
 
 if (isset($_SESSION['id'])) {
     $nome = $_SESSION['nome'];
