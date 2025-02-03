@@ -13,10 +13,11 @@ class Agendamento
     public function __construct($conn, $id)
     {
         $this->conn = $conn;
-        $this->id = (int)$id;
+        $this->id = (int) $id;
     }
     public function mostrandoAgendamento()
     {
+        # add botão para mudar a ORDEM
         try {
             $query = "SELECT 
             paciente.nome AS paciente_nome, 
@@ -24,12 +25,13 @@ class Agendamento
             especializacao.especializacao, 
             consulta.data_horario, 
             consulta.observacoes_diagnostico, 
-            consulta.status
+            status_consulta.descricao
         FROM consulta
         INNER JOIN usuarios AS paciente ON consulta.id_paciente = paciente.id
         INNER JOIN usuarios AS medico ON consulta.id_medico = medico.id
         INNER JOIN especializacao ON consulta.id_tipo_consulta = especializacao.id 
-        WHERE paciente.id = :id";
+		INNER JOIN status_consulta on consulta.id_status = status_consulta.id
+        WHERE paciente.id = :id ORDER BY data_horario ASC";
 
 
             $stmt = $this->conn->prepare($query);
@@ -45,7 +47,7 @@ class Agendamento
                     echo "\t\t<td>" . htmlspecialchars($linha['especializacao']) . "</td>\n";
                     echo "\t\t<td>" . htmlspecialchars($linha['data_horario']) . "</td>\n";
                     echo "\t\t<td>" . htmlspecialchars($linha['observacoes_diagnostico']) . "</td>\n";
-                    echo "\t\t<td>" . htmlspecialchars($linha['status']) . "</td>\n";
+                    echo "\t\t<td>" . htmlspecialchars($linha['descricao']) . "</td>\n";
                     echo "\t</tr>\n";
                 }
                 echo "</table>\n";
@@ -61,8 +63,3 @@ class Agendamento
 
 }
 $agendamento = new Agendamento($conn, $_SESSION['id']);
-if (!isset($_SESSION['id'])) {
-    GerenciadorSessao::setMensagem("login Necessario");
-    GerenciadorSessao::redirecionar("index.php");
-    exit();
-}

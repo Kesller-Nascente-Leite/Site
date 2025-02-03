@@ -19,6 +19,9 @@ require_once "GerenciadorDeSessoes.php";
         function home() {
             location.href = "site.php";
         }
+        function prescricao(){
+            location.href = 'prescricao.php';
+        }
         function Protuario() {
             location.href = 'protuario.php';
         }
@@ -45,6 +48,7 @@ require_once "GerenciadorDeSessoes.php";
         <nav>
 
             <button type="button" name="home" onclick="home()">Home</button>
+            <button type="buttom" onclick="prescricao()">Prescrição</button>
             <button type="button" onclick="Protuario()">Protuario</button>
             <button type="button" onclick="agendamento()">Agendamento</button>
             <button type="button" onclick="perfil()">Perfil</button>

@@ -1,13 +1,14 @@
 <?php
 require_once '../../configdb.php';
+require_once 'verificaAutenticacao.php';
 require_once 'GerenciadorDeSessoes.php';
-
-// muita gambiarra nesse codigo
+require 'verifica_sessao.php';
 
 class DiagnosticoPaciente
 {
     private $conn;
     private $id_paciente;
+    private $id_consulta;
     private $linha;
 
     public function __construct($conn)
@@ -15,30 +16,39 @@ class DiagnosticoPaciente
         $this->conn = $conn;
     }
 
-    public function verificarIdPaciente()
+    public function verificarIds()
     {
-        if (!isset($_GET['id_paciente']) || !is_numeric($_GET['id_paciente'])) {
-            echo "ID do paciente não fornecido.";
+        if (
+            !isset($_GET['id_paciente'], $_GET['id_consulta']) ||
+            !is_numeric($_GET['id_paciente']) ||
+            !is_numeric($_GET['id_consulta'])
+        ) {
+            GerenciadorSessao::setMensagem("ID do paciente ou consulta inválido.");
+            GerenciadorSessao::redirecionar('atendimentoEmEspera.php');
             exit();
         }
 
-        $this->id_paciente = $_GET['id_paciente'];
+        $this->id_paciente = (int) $_GET['id_paciente'];
+        $this->id_consulta = (int) $_GET['id_consulta'];
     }
 
     public function consultarDiagnostico()
     {
         $query = "SELECT p.nome, c.data_horario, c.observacoes_diagnostico
-                    FROM consulta c
-                    INNER JOIN usuarios p ON c.id_paciente = p.id
-                    WHERE c.id_paciente = :id_paciente";
+                  FROM consulta c
+                  INNER JOIN usuarios p ON c.id_paciente = p.id
+                  WHERE c.id_paciente = :id_paciente AND c.id = :id_consulta";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id_paciente', $this->id_paciente, PDO::PARAM_INT);
+        $stmt->bindParam(':id_consulta', $this->id_consulta, PDO::PARAM_INT);
         $stmt->execute();
+
         $this->linha = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$this->linha) {
-            echo "Paciente não encontrado.";
+            GerenciadorSessao::setMensagem("Paciente ou consulta não encontrada.");
+            GerenciadorSessao::redirecionar('atendimentoEmEspera.php');
             exit();
         }
     }
@@ -48,45 +58,27 @@ class DiagnosticoPaciente
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['diagnostico'])) {
             $novoDiagnostico = $_POST['diagnostico'];
 
-            $query = "SELECT id FROM consulta WHERE id_paciente = :id_paciente AND status = 'Em espera'";;
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id_paciente', $this->id_paciente, PDO::PARAM_INT);
-            $stmt->execute();
-            $id_Consulta = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$id_Consulta) {
-                echo "Consulta não encontrada para o paciente.";
-                exit();
-            }
-
             $updateQuery = "UPDATE consulta 
-            SET observacoes_diagnostico = :diagnostico 
-            WHERE id_paciente = :id_paciente 
-                AND id = :id 
-                AND status = 'Em espera'";
+                            SET observacoes_diagnostico = :diagnostico 
+                            WHERE id_paciente = :id_paciente 
+                                AND id = :id_consulta 
+                                AND id_status = 1";
+
             $updateStmt = $this->conn->prepare($updateQuery);
-
-
             $updateStmt->execute([
                 ':diagnostico' => $novoDiagnostico,
-                ':id_paciente'=>$this->id_paciente,
-                ':id' => $id_Consulta['id']
+                ':id_paciente' => $this->id_paciente,
+                ':id_consulta' => $this->id_consulta,
             ]);
-            
-            GerenciadorSessao::setMensagem('Diagnostico Atualizado');
-            GerenciadorSessao::redirecionar('AtendimentoEmEspera.php');
+
+            GerenciadorSessao::setMensagem('Diagnóstico atualizado com sucesso.');
+            GerenciadorSessao::redirecionar('atendimentoEmEspera.php');
             exit();
         }
     }
 
-
     public function getDiagnostico()
     {
-        return $this->linha['observacoes_diagnostico'];
+        return $this->linha['observacoes_diagnostico'] ?? '';
     }
 }
-$diagnosticoPaciente = new DiagnosticoPaciente($conn);
-$diagnosticoPaciente->verificarIdPaciente();
-$diagnosticoPaciente->consultarDiagnostico();
-$diagnosticoPaciente->atualizarDiagnostico();
-?>

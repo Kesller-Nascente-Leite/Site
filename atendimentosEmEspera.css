@@ -45,12 +45,18 @@ nav button:active {
     transform: scale(0.95);
 }
 
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
 
-main {
+
+main>article {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
-    max-width: 900px;
     margin: 20px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -208,5 +214,3 @@ table tr:nth-child(even) {
 .status-select:hover {
     background-color: #f1f1f1;
 }
-
-

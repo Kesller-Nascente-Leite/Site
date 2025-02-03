@@ -2,6 +2,7 @@
 require_once '../../configdb.php';
 require_once 'verificaAutenticacao.php';
 require_once 'GerenciadorDeSessoes.php';
+require_once 'csrfPROTECAO.php';
 Autenticacao::AutenticacaoMedico();
 ?>
 <!DOCTYPE html>
@@ -43,7 +44,11 @@ Autenticacao::AutenticacaoMedico();
             <h2>Adicionar Prescrição</h2>
 
             <form method="post" action="<?= htmlspecialchars('adicionarPrescricaoBackAnd.php'); ?>" autocomplete="on">
-            
+                <input type="hidden" name="csrf_token" value="<?php echo Csrf::gerarToken(); ?>">
+
+                <label for="idPaciente">ID do Paciente:</label>
+                <input type="number" id="id_paciente" name="idPaciente" required>
+
                 <label for="idConsulta">ID da Consulta:</label>
                 <input type="number" id="id_consulta" name="idConsulta" required>
 

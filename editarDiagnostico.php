@@ -1,8 +1,11 @@
 <?php
 require_once 'editarDiagnosticoBackAnd.php';
-require_once 'verificaAutenticacao.php';
 Autenticacao::AutenticacaoMedico();
-
+// pura gambiara com o $_GET
+$diagnosticoPaciente = new DiagnosticoPaciente($conn);
+$diagnosticoPaciente->verificarIds();
+$diagnosticoPaciente->consultarDiagnostico();
+$diagnosticoPaciente->atualizarDiagnostico();
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +45,13 @@ Autenticacao::AutenticacaoMedico();
     </header>
     <main>
         <h1>Editar Diagnóstico do Paciente</h1>
-        <form method="POST" action="<?php echo htmlspecialchars('editarDiagnosticoBackAnd.php'); ?>">
+        <form method="POST" action="<?=  htmlspecialchars('#'); ?>">
             <label for="diagnostico">Diagnóstico:</label>
             <textarea name="diagnostico" id="diagnostico" rows="4"
                 cols="50"></textarea>
-            <br>
+            
             <button type="submit">Atualizar Diagnóstico</button>
+            
         </form>
     </main>
 </body>
