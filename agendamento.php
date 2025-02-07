@@ -7,6 +7,7 @@ require_once 'verificaAutenticacao.php';
 
 Autenticacao::AutenticacaoPaciente();
 
+$agendamento = new Agendamento($conn, $_SESSION['id']);
 ?>
 
 
@@ -53,7 +54,20 @@ Autenticacao::AutenticacaoPaciente();
         <article>
             <center>
                 <h2>Agendamentos</h2>
-                <br>
+            </center>
+            <br>
+            <form method="GET" action="#">
+                <select id='botaoAgendamento' name='botaoAgendamento'>
+                    <option value='' disabled selected>Selecione a ordem</option>
+                    <option value='1'>Última Consulta</option>
+                    <option value='2'>Concluídos</option>
+                    <option value='3'>Pendente</option>
+                    <option value='4'>Cancelado</option>
+                    <option value='5'>Em espera</option>
+                </select>
+                <button type="submit">Ordenar</button>
+            </form>
+            <center>
                 <?php
 
                 $agendamento->mostrandoAgendamento();

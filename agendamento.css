@@ -10,7 +10,7 @@ body {
 
 
 header {
-    background-color: transparent; 
+    background-color: transparent;
     padding: 10px 0;
 }
 
@@ -22,7 +22,7 @@ nav {
 
 nav>button {
     background-color: #ffffff;
-    color: #00509e; 
+    color: #00509e;
     border: 2px solid #ffffff;
     padding: 10px 20px;
     border-radius: 20px;
@@ -33,14 +33,15 @@ nav>button {
 }
 
 nav>button:hover {
-    background-color: #003f7f; 
-    color: #ffffff; 
+    background-color: #003f7f;
+    color: #ffffff;
     border-color: #003f7f;
 }
 
 nav>button:active {
-    transform: scale(0.95); 
+    transform: scale(0.95);
 }
+
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
@@ -49,7 +50,7 @@ nav>button:active {
 }
 
 h2 {
-    color: #00509e; 
+    color: #00509e;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -58,42 +59,85 @@ h2 {
 
 table {
     width: 100%;
-    border-collapse: collapse; 
-    background-color: #ffffff; 
-    font-size: 16px; 
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 16px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin: 20px auto; 
-    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    overflow: hidden;
 }
 
 
 table td,
 table th {
-    border: 1px solid #cce7ff; 
-    padding: 10px; 
-    text-align: center; 
-    color: #00509e; 
+    border: 1px solid #cce7ff;
+    padding: 10px;
+    text-align: center;
+    color: #00509e;
 }
 
 table th {
-    background-color: #00509e; 
-    color: #ffffff; 
+    background-color: #00509e;
+    color: #ffffff;
     font-weight: bold;
 }
 
 
 table tr:nth-child(even) {
-    background-color: #f0f8ff; 
+    background-color: #f0f8ff;
 }
 
 table tr:nth-child(odd) {
-    background-color: #ffffff; 
+    background-color: #ffffff;
 }
 
 
 p {
-    color: rgb(0, 149, 255); 
-    font-style: italic; 
-    text-align: center; 
-    margin: 10px 0;}
+    color: rgb(0, 149, 255);
+    font-style: italic;
+    text-align: center;
+    margin: 10px 0;
+}
+
+form button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #00509e;
+    border: 2px solid #00509e;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background-color: #003f7f;
+    border-color: #003f7f;
+}
+
+form button:active {
+    transform: scale(0.95);
+}
+
+#botaoAgendamento {
+    padding: 5px 10px;
+    border: 2px solid #00509e;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #00509e;
+    background-color: #ffffff;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#botaoAgendamento:focus {
+    border-color: #003f7f;
+    box-shadow: 0 0 8px rgba(0, 80, 158, 0.5);
+}
+
+#botaoAgendamento:hover {
+    background-color: #f1f1f1;
+}

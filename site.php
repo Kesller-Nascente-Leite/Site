@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['consulta'])) {
                         value="<?= htmlspecialchars($nome) ?>" required> <br>
 
                     <label for="dataHora">Data e Horario</label>
-                    <input type="datetime-local" name="dataHora" id="dataHora" required step="1800">
+                    <input type="datetime-local" name="dataHora" id="dataHora"  step="1800" required>
                     <br>
 
                     <label for="consulta">Escolha a consulta:</label>
