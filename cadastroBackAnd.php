@@ -8,16 +8,17 @@ require_once "Session_start.php";
 class Cadastro
 {
     private $conn;
-    private $nome;
-    private $email;
-    private $senha;
+    private string $nome;
+    private string $email;
+    private string $senha;
     private $sexo;
     private $nascimento;
     private $telefone;
 
     private $tipoUsuario;
 
-    public function __construct($conn, $nome, $email, $sexo, $senha, $nascimento, $telefone, $tipoUsuario = 'Paciente') {
+    public function __construct($conn, string $nome, string $email, string $sexo, $senha, $nascimento, $telefone, $tipoUsuario = 'Paciente')
+    {
 
         $this->conn = $conn;
         $this->nome = $nome;
@@ -59,7 +60,6 @@ class Cadastro
             GerenciadorSessao::redirecionar("cadastro.php");
             exit();
         }
-
     }
 
     public function checandoEmail()
@@ -76,7 +76,7 @@ class Cadastro
                 exit();
             }
         } catch (PDOException $e) {
-            echo "Erro ao acessar o banco de dados.".error_log($e->getMessage());;
+            echo "Erro ao acessar o banco de dados." . error_log($e->getMessage());;
         }
     }
 
@@ -127,7 +127,7 @@ class Cadastro
                 exit();
             }
         } catch (PDOException $e) {
-            echo "Erro ao acessar o banco de dados.".$e->getMessage();
+            echo "Erro ao acessar o banco de dados." . $e->getMessage();
         }
     }
 }
@@ -142,7 +142,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         Csrf::limparToken();
         $cadastro->checandoEmail();
         $cadastro->cadastrando();
-
     } catch (Exception $e) {
         error_log($e->getMessage());
         GerenciadorSessao::setMensagem("Ocorreu um erro. Por favor, tente novamente.");
@@ -150,5 +149,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 }
-
-

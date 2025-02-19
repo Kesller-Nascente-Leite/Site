@@ -1,0 +1,16 @@
+{
+    "name": "usuariopc/site",
+    "autoload": {
+        "psr-4": {
+            "site\\": "namespace/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kesller Nascente Leite",
+            "email": "165293702+Kesller-Nascente-Leite@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+    
+}

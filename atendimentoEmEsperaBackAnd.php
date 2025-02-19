@@ -5,6 +5,7 @@ require "GerenciadorDeSessoes.php";
 require_once "../../configdb.php";
 require_once 'verificaAutenticacao.php';
 
+
 Autenticacao::AutenticacaoMedico();
 
 class Consulta

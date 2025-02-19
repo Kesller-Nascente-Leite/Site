@@ -4,6 +4,7 @@ require "../../configdb.php";
 require_once "Session_start.php";
 require_once "GerenciadorDeSessoes.php";
 require_once 'verificaAutenticacao.php';
+require 'verifica_sessao.php';
 
 Autenticacao::AutenticacaoPaciente();
 class Agendamento

@@ -2,6 +2,7 @@
 require_once 'csrfPROTECAO.php';
 require_once 'GerenciadorDeSessoes.php';
 require_once 'verificaAutenticacao.php';
+require 'verifica_sessao.php';
 require_once '../../configdb.php';
 Autenticacao::AutenticacaoMedico();
 

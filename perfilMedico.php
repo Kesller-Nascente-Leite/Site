@@ -3,6 +3,7 @@ require 'verifica_sessao.php';
 require "GerenciadorDeSessoes.php";
 require_once '../../configdb.php';
 require_once 'verificaAutenticacao.php';
+require 'verifica_sessao.php';
 Autenticacao::AutenticacaoMedico();
 
 $nascimento = date("d-m-Y", strtotime($_SESSION['data_nascimento']));

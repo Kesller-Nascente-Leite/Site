@@ -6,8 +6,8 @@ require "GerenciadorDeSessoes.php";
 class Usuario
 {
     private $conn;
-    private $email;
-    private $senha;
+    private string $email;
+    private string $senha;
 
     public function __construct($conn, $email, $senha)
     {

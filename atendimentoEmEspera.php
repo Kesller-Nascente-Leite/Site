@@ -1,6 +1,7 @@
 <?php
 require 'atendimentoEmEsperaBackAnd.php';
 require_once 'verificaAutenticacao.php';
+require 'verifica_sessao.php';
 
 Autenticacao::AutenticacaoMedico();
 $consulta = new Consulta($conn);
